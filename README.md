@@ -1,15 +1,60 @@
-Title: HIPAA-Compliant Claims Processing Platform for Healthcare Adjudication
-Note at top: This is a case study describing system design and my contributions on a production project. Source code is proprietary to my employer and is not included here.
+# CVS Health: HIPAA-Compliant Claims Platform (Case Study)
 
-Problem:
-CVS Caremark's claims adjudication platform needed to process tens of thousands of healthcare claims daily, with full visibility into submission and status tracking, while strictly complying with HIPAA regulations for handling Protected Health Information (PHI). Synchronous processing was creating bottlenecks that delayed claims as volume grew, and any compliance gap in PHI handling carried serious regulatory risk.
+> **Role:** Software Developer · **Period:** May 2024 – Dec 2024 · **Location:** USA
+> **Note:** This is a high-level, sanitized case study. It contains no proprietary code, PHI, or internal details.
 
-My Role & Contribution:
-I built end-to-end claims processing features spanning both the backend microservices and the frontend UI, with a specific focus on making PHI handling compliant at every layer of the stack — not just at the database level.
+## Overview
 
-Architecture Approach:
-The platform used Spring Boot microservices on the backend paired with Angular UI components on the frontend, giving users real-time claims submission and adjudication status tracking across 50,000+ daily claims. To remove synchronous bottlenecks, claims transactions moved through Kafka-based event-driven pipelines, decoupling claim submission from downstream adjudication processing so delays in one stage didn't cascade into others. Spring Security and OAuth2 were integrated directly into the data access layers handling PHI, ensuring authentication and authorization were enforced before any sensitive data was touched — not just at the API gateway level. Retry and fault-tolerance patterns were introduced to handle transient failures gracefully, since a dropped claim in healthcare isn't just a bug, it can directly affect a patient's care timeline. SQL Server and MongoDB queries were optimized through indexing and partitioning to keep performance steady as claim volume grew. The team shipped through Agile/Scrum sprints, with microservices deployed via Docker and Kubernetes on AWS ECS, and CI/CD automated through Azure DevOps.
+I worked on a healthcare claims platform handling **50,000+ claims per day**, building microservices and UI components for claims submission, real-time status tracking, and adjudication visibility.
 
-Outcome:
-Downstream service failures dropped by approximately 25% after the retry and fault-tolerance patterns were introduced. The platform maintained zero compliance incidents related to PHI handling during my time on the project. Claims throughput improved as the asynchronous pipeline removed the bottlenecks that previously slowed adjudication during high-volume periods.
+## Impact at a Glance
+
+| Area | Result |
+| --- | --- |
+| Scale | Platform handling **50,000+ daily claims** |
+| Reliability | **~25% fewer downstream service failures** (retry/fault-tolerance patterns + query optimization) |
+| Architecture | Synchronous claim calls replaced with **Kafka event-driven pipelines** for better throughput and decoupling |
+| Interoperability | **FHIR-compliant APIs** for secure data exchange between healthcare systems |
+| Security | **Spring Security + OAuth2** within HIPAA-compliant data access layers |
+
+## High-Level Architecture (simplified)
+
+```mermaid
+flowchart LR
+    A[Angular + TypeScript UI] --> B[Spring Boot Microservices]
+    B --> C[Kafka Event Pipelines]
+    C --> D[Claims Adjudication Services]
+    B --> E[FHIR REST APIs<br/>Patient · Claim · Coverage · Encounter]
+    B --> F[(SQL Server / MongoDB)]
+    B -. secured by .-> G[Spring Security + OAuth2]
+```
+
+## What I Built
+
+### 1. Claims microservices and UI
+- Built Spring Boot microservices and Angular/TypeScript components for claim submission, real-time status tracking, and adjudication visibility.
+
+### 2. Event-driven pipelines
+- Engineered Kafka pipelines to replace synchronous calls in claims workflows, improving throughput and service decoupling.
+
+### 3. FHIR-compliant APIs
+- Developed REST APIs for Patient, Claim, Coverage, and Encounter resources, enabling interoperability between healthcare systems and downstream applications.
+
+### 4. Security and compliance
+- Implemented Spring Security and OAuth2 inside HIPAA-compliant data access layers to protect PHI across claims services.
+
+### 5. Resilience and delivery
+- Applied retry and fault-tolerance patterns and optimized SQL Server and MongoDB queries.
+- CI/CD on Azure DevOps with deployments to Docker, Kubernetes, and AWS ECS.
+
+## Tech Stack
+
+**Backend:** Java, Spring Boot, Spring Security, OAuth2, REST, FHIR
+**Frontend:** Angular, TypeScript
+**Messaging:** Apache Kafka
+**Data:** SQL Server, MongoDB
+**Cloud / DevOps:** Azure DevOps, Docker, Kubernetes, AWS ECS
+
+---
+[← Back to profile](https://github.com/bindukalam)
 
