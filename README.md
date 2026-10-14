@@ -1,7 +1,7 @@
 # CVS Health: HIPAA-Compliant Claims Platform (Case Study)
 
 > **Role:** Software Developer · **Period:** May 2024 – Dec 2024 · **Location:** USA
-> **Note:** This is a high-level, sanitized case study. It contains no proprietary code, PHI, or internal details.
+
 
 ## Overview
 
